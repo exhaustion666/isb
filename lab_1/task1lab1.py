@@ -82,10 +82,10 @@ def save_text(text, output_file : str) -> str:
 
 
 def main():
-    key_file = 'key.json'
-    source_file = 'source_text.txt'
-    changed_file = 'changed_text.txt'
-    decrypted_file = 'decrypted_text.txt'
+    key_file = 'task1key.json'
+    source_file = 'task1source_text.txt'
+    changed_file = 'task1changed_text.txt'
+    decrypted_file = 'task1decrypted_text.txt'
 
     try:
         key = load_key(key_file)
