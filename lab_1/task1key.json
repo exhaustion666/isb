@@ -31,8 +31,8 @@
     "Э": "В",
     "Ю": "Г",
     "Я": "Д",
-    "key_file" : "key.json",
-    "source_file" : "source_text.txt",
-    "encrypted_file" : "encrypted_text.txt",
-    "decrypted_file" : "decrypted_text.txt"
+    "key_file" : "task1key.json",
+    "source_file" : "task1source_text.txt",
+    "encrypted_file" : "task1encrypted_text.txt",
+    "decrypted_file" : "task1decrypted_text.txt"
 }
