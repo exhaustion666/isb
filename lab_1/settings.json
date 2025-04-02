@@ -1,0 +1,10 @@
+{
+    "KEY_FILE" : "task1key.json",
+    "SOURCE_FILE" : "task1source_text.txt",
+    "CHANGED_FILE" : "task1changed_text.txt",
+    "DECRYPTED_FILE" : "task1decrypted_text.txt",
+    "SOURCE_TEXT" : "cod17.txt",
+    "FIRST_KEY" : "key1.json",
+    "SECOND_KEY" : "key2.json",
+    "DECRYPTED_TEXT" : "task2decrypted_text.txt"
+}

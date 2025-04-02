@@ -1,39 +1,5 @@
+from work_files import load_json, load_text, save_text
 import json
-
-def load_key(file_name: str) -> dict:
-    """
-    Загружает ключ из JSON файла.
-    
-    args:
-        file_name (str): Название файла с ключом.
-    
-    return: 
-        dict: Ключ в виде словаря.
-    """
-    try:
-        with open(file_name, 'r', encoding='utf-8') as file:
-            return json.load(file)
-        
-    except Exception as e:
-        print(e)
-
-
-def load_text(file_name: str) -> str:
-    """
-    Загружает текст из файла.
-    
-    args:
-        file_name(str): Название файла с текстом.
-    
-    return: 
-        str: Содержимое файла.
-    """
-    try:
-        with open(file_name, 'r', encoding='utf-8') as file:
-            return file.read()
-        
-    except Exception as e:
-        print(e)
 
 
 def change_text(text: str, key: dict) -> str:
@@ -65,30 +31,14 @@ def decrypt_text(text: str, key: dict) -> str:
     return ''.join(reverse_key.get(char, char) for char in text)
 
 
-def save_text(text, output_file : str) -> str:
-    """
-    Сохраняет текст в файл.
-
-    args: 
-        text(str): Текст, который нужно сохранить.
-        output_file: Название файла, в который нужно сохранить текст.
-    """
-    try:
-        with open(output_file, 'w', encoding='utf-8') as file:
-            file.write(text)
-    
-    except Exception as e:
-        print(e)
-
-
 def main():
-    key_file = 'task1key.json'
-    source_file = 'task1source_text.txt'
-    changed_file = 'task1changed_text.txt'
-    decrypted_file = 'task1decrypted_text.txt'
-
+    settings = load_json("../settings.json")
+    key_file = settings.get("KEY_FILE", "")
+    source_file = settings.get("SOURCE_FILE", "")
+    changed_file = settings.get("CHANGED_FILE", "")
+    decrypted_file = settings.get("DECRYPTED_FILE", "")
     try:
-        key = load_key(key_file)
+        key = load_json(key_file)
         text = load_text(source_file)
         changed_text = change_text(text.upper(), key)
         decrypted_text = decrypt_text(changed_text.upper(), key)
@@ -96,7 +46,3 @@ def main():
         save_text(decrypted_text, decrypted_file)
     except Exception as e:
         print(e)
-
-
-if __name__ == '__main__':
-    main()
