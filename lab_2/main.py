@@ -1,3 +1,4 @@
+from constants import *
 from nist import *
 
 
@@ -9,7 +10,7 @@ def main():
     results.append(("Frequency Bitwise Test (Java)", freq_bitwise_test(JAVA_SEQ)))
     results.append(("Same Bits Test (Java)", same_bits_test(JAVA_SEQ)))
     results.append(("Longest Test (Java)", longest_test(JAVA_SEQ)))
-    write_results(results, "results.txt")
+    write_results(results, RESULT_FILE)
 
 
 if __name__ == "__main__":
