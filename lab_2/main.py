@@ -6,7 +6,7 @@ def main():
     """
     Adds the NIST test results to an array and writes it to a file.
     """
-   constants = load_constants('constants.json')
+    constants = load_constants('constants.json')
     CPP_SEQ = constants['CPP_SEQ']
     CPP_SEQ2 = constants['CPP_SEQ2']
     JAVA_SEQ = constants['JAVA_SEQ']
