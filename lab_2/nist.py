@@ -65,10 +65,11 @@ def longest_test(seq) -> float:
             else:
                 cur_ones = 0
 
-        if max_ones <= 1: v[0] += 1
-        elif max_ones == 2: v[1] += 1
-        elif max_ones == 3: v[2] += 1
-        else: v[3] += 1
+        match max_ones:
+            case 0 | 1: v[0] += 1
+            case 2: v[1] += 1
+            case 3: v[2] += 1
+            case _: v[3] += 1
 
     hi_sq = sum((v[i] - 16 * EXPECT_PI[i]) ** 2 / (16 * EXPECT_PI[i]) for i in range(4))
     p_value = gammaincc(3 / 2, hi_sq / 2)
