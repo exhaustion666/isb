@@ -2,6 +2,14 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.Random;
 
+/**
+ * Generates a random binary sequence of length 128 bits
+ * and saves it to the file "random_sequence.txt".
+ *
+ * This program uses the Random class to generate random sequence of 0 or 1.
+ *
+ * @throws Exception if an I/O error occurs while writing to the file
+ */
 public class Sequence {
     public static void main(String[] args) throws Exception {
         StringBuilder binarySequence = new StringBuilder(128);
