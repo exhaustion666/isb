@@ -3,6 +3,9 @@ from nist import *
 
 
 def main():
+    """
+    Adds the NIST test results to an array and writes it to a file.
+    """
     results = []
     results.append(("Frequency Bitwise Test (C++)", freq_bitwise_test(CPP_SEQ)))
     results.append(("Same Bits Test (C++)", same_bits_test(CPP_SEQ)))
