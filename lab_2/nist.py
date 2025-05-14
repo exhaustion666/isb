@@ -74,3 +74,18 @@ def longest_test(seq) -> float:
     hi_sq = sum((v[i] - 16 * EXPECT_PI[i]) ** 2 / (16 * EXPECT_PI[i]) for i in range(4))
     p_value = gammaincc(3 / 2, hi_sq / 2)
     return p_value
+
+
+def write_results(results, filename) -> None:
+    """
+    Writes results.
+
+    args:
+        results (list): Results of tests.
+        filename (str): Name of file.
+    """
+
+    with open(filename, mode='w', encoding='utf-8') as file:
+        for test_name, p_value in results:
+            conclusion = "Passed" if p_value > 0.01 else "Failed"
+            file.write(f"{test_name}: p_value = {p_value}, Result: {conclusion}\n")
