@@ -1,4 +1,3 @@
-from constants import *
 from scipy.special import gammaincc
 
 import math
@@ -41,12 +40,14 @@ def same_bits_test(seq) -> float:
     return p_value
 
 
-def longest_test(seq) -> float:
+def longest_test(seq, BLOCK_SIZE: int, EXPECT_PI: list) -> float:
     """
     A test for the longest sequence of units in a block.
     
     args:
         seq (str): Source random sequence.
+        BLOCK_SIZE (int): Size of blocks in sequence.
+        EXPECT_PI (list): List of theoretical probabilities Pi.
 
     return:
         p_value (float): P-value of sequence.
