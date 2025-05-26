@@ -6,6 +6,7 @@ from cryptography.hazmat.decrepit.ciphers.algorithms import Blowfish
 from cryptography.hazmat.primitives.asymmetric import padding as asym_padding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from file_utils import *
+from symmetric_crypto import pad, unpad
 
 def decrypt_symmetric_key(enc_sym_key_path: str, priv_key_path: str) -> bytes:
     """
@@ -79,45 +80,3 @@ def decrypt_data(config: dict) -> None:
     
     except Exception as e:
         raise RuntimeError(f"Error during decryption: {e}")
-
-
-def pad(data: bytes, block_size: int = 8) -> bytes:
-    """
-    Pads the input data to ensure it fits the block size using ANSIX923 padding.
-    
-    args:
-        data (bytes): The input data to be padded.
-        block_size (int): The block size.
-    
-    return:
-        padded_text (bytes): The padded data.
-    """
-    try:
-        print("Padding data...")
-        padder = sym_padding.ANSIX923(block_size * 8).padder()
-        padded_text = padder.update(data) + padder.finalize()
-        print("Padding applied successfully.")
-        return padded_text
-    except Exception as e:
-        raise RuntimeError(f"Error during padding: {e}")
-
-
-def unpad(data: bytes, block_size: int = 8) -> bytes:
-    """
-    Removes padding from the input data.
-    
-    args:
-        data (bytes): The padded data to be unpadded.
-        block_size (int): The block size.
-    
-    return:
-        unpadded_dc_text (bytes): The unpadded data.
-    """
-    try:
-        print("Removing padding from data...")
-        unpadder = sym_padding.ANSIX923(block_size * 8).unpadder()
-        unpadded_dc_text = unpadder.update(data) + unpadder.finalize()
-        print("Padding removed successfully.")
-        return unpadded_dc_text
-    except Exception as e:
-        raise RuntimeError(f"Error during unpadding: {e}")
