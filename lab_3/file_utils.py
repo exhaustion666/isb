@@ -1,4 +1,3 @@
-# file_utils.py
 import json
 import os
 
@@ -101,36 +100,3 @@ def save_binary(path, content: bytes) -> None:
     except Exception as e:
         raise RuntimeError(f"Error saving binary file {path}: {e}")
 
-
-def save_encrypted_file(path: str, content: bytes) -> None:
-    """
-    Saves an encrypted file.
-    
-    args:
-        path (str): The path where the encrypted file will be saved.
-        content (bytes): The encrypted content to be saved.
-    """
-    try:
-        print(f"Saving encrypted file: {path}...")
-        with open(path, 'wb') as f:
-            f.write(content)
-        print(f"Encrypted file {path} saved successfully.")
-    except Exception as e:
-        raise RuntimeError(f"Error saving encrypted file {path}: {e}")
-
-
-def save_decrypted_file(path: str, content: str) -> None:
-    """
-    Saves a decrypted file.
-    
-    args:
-        path (str): The path where the decrypted file will be saved.
-        content (str): The decrypted content to be saved.
-    """
-    try:
-        print(f"Saving decrypted file: {path}...")
-        with open(path, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print(f"Decrypted file {path} saved successfully.")
-    except Exception as e:
-        raise RuntimeError(f"Error saving decrypted file {path}: {e}")
