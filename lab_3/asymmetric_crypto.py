@@ -1,7 +1,7 @@
 import os
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding as asym_padding
-from file_utils import save_binary, load_binary
+from file_utils import *
 
 
 def generate_keys(config: dict) -> None:
