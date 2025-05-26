@@ -1,0 +1,30 @@
+import os
+from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import rsa, padding as asym_padding
+
+from file_utils import save_binary
+
+
+def generate_keys(config: dict) -> None:
+    key_length_bits = config.get("blowfish_key_bits", 128)
+    if not (32 <= key_length_bits <= 448 and key_length_bits % 8 == 0):
+        raise ValueError("Blowfish key length must be 32-448 bits in 8-bit increments.")
+    
+    key_bytes = os.urandom(key_length_bits // 8)
+    save_binary(config["symmetric_key"], key_bytes)
+
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+    public_key = private_key.public_key()
+
+    save_binary(config["public_key"], public_key.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    ))
+    save_binary(config["secret_key"], private_key.private_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PrivateFormat.TraditionalOpenSSL,
+        encryption_algorithm=serialization.NoEncryption()
+    ))
+
+    c_text = public_key.encrypt(key_bytes, asym_padding.OAEP(mgf=asym_padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
+    save_binary(config["encrypted_symmetric_key"], c_text)
