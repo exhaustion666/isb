@@ -1,8 +1,7 @@
 import argparse
-from file_utils import load_config
+from file_utils import *
 from asymmetric_crypto import generate_keys
-from hybrid_crypto_core import encrypt_data, decrypt_data
-
+from symmetric_crypto import encrypt_data, decrypt_data
 
 def main():
     try:
@@ -21,15 +20,20 @@ def main():
             case "generation":
                 generate_keys(config)
             case "encryption":
-                encrypt_data(config)
+                key = load_binary(config["symmetric_key"])
+                text = load_text_file(config["initial_file"])
+                encrypted_data = encrypt_data(key, text)
+                save_binary(config["encrypted_file"], encrypted_data)
             case "decryption":
-                decrypt_data(config)
+                key = load_binary(config["symmetric_key"])
+                encrypted_data = load_binary(config["encrypted_file"])
+                decrypted_text = decrypt_data(key, encrypted_data)
+                save_text_file(config["decrypted_file"], decrypted_text)
 
         print("Operation completed successfully.")
     
     except Exception as e:
         raise RuntimeError(f"An error occurred: {e}")
-
 
 if __name__ == "__main__":
     main()
