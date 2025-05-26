@@ -1,6 +1,6 @@
 import argparse
 from file_utils import load_config
-from key_manager import generate_keys
+from asymmetric_crypto import generate_keys
 from hybrid_crypto_core import encrypt_data, decrypt_data
 
 
