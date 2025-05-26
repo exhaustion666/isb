@@ -2,7 +2,7 @@ import os
 from cryptography.hazmat.primitives.ciphers import Cipher, modes
 from cryptography.hazmat.primitives import padding as sym_padding
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.ciphers import algorithms
+from cryptography.hazmat.decrepit.ciphers.algorithms import Blowfish
 
 
 def encrypt_data(key: bytes, input_text: str) -> bytes:
@@ -21,7 +21,7 @@ def encrypt_data(key: bytes, input_text: str) -> bytes:
       
         padded = pad(input_text.encode("utf-8"), 8)
         iv = os.urandom(8)
-        cipher = Cipher(algorithms.Blowfish(key), modes.CBC(iv))
+        cipher = Cipher(Blowfish(key), modes.CBC(iv))
         encryptor = cipher.encryptor()
         c_text = encryptor.update(padded) + encryptor.finalize()
         
@@ -45,7 +45,7 @@ def decrypt_data(key: bytes, data: bytes) -> str:
         print("Starting data decryption...")
         
         iv, ciphertext = data[:8], data[8:]
-        cipher = Cipher(algorithms.Blowfish(key), modes.CBC(iv))
+        cipher = Cipher(Blowfish(key), modes.CBC(iv))
         decryptor = cipher.decryptor()
         padded_plain = decryptor.update(ciphertext) + decryptor.finalize()
         unpadded = unpad(padded_plain, 8)
