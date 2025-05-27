@@ -24,10 +24,33 @@ def generate_keys(config: dict) -> None:
 
         private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
         public_key = private_key.public_key()
-        save_binary(config["public_key"], public_key.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo))
-        save_binary(config["secret_key"], private_key.private_bytes(encoding=serialization.Encoding.PEM, format=serialization.PrivateFormat.TraditionalOpenSSL, encryption_algorithm=serialization.NoEncryption()))
+        
+         save_binary(
+            config["public_key"],
+            public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo,
+            ),
+        )
+        
+        save_binary(
+            config["secret_key"],
+            private_key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PrivateFormat.TraditionalOpenSSL,
+                encryption_algorithm=serialization.NoEncryption(),
+            ),
+        )
 
-        c_text = public_key.encrypt(key_bytes, asym_padding.OAEP(mgf=asym_padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
+        c_text = public_key.encrypt(
+            key_bytes,
+            asym_padding.OAEP(
+                mgf=asym_padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None,
+            ),
+        )
+        
         save_binary(config["encrypted_symmetric_key"], c_text)
 
         print("RSA keys and symmetric key generated and saved successfully.")
