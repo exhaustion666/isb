@@ -25,7 +25,7 @@ def generate_keys(config: dict, key_bits: int) -> None:
         private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
         public_key = private_key.public_key()
         
-         save_binary(
+        save_binary(
             config["public_key"],
             public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
