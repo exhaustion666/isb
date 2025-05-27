@@ -16,10 +16,10 @@ def generate_keys(config: dict, key_bits: int) -> None:
     try:
         print("Generating RSA key pair and symmetric key...")
 
-        if not (32 <= key_length_bits <= 448 and key_length_bits % 8 == 0):
+        if not (32 <= key_bits <= 448 and key_bits % 8 == 0):
             raise ValueError("Blowfish key length must be between 32-448 bits in 8-bit increments.")
 
-        key_bytes = os.urandom(key_length_bits // 8)
+        key_bytes = os.urandom(key_bits // 8)
         save_binary(config["symmetric_key"], key_bytes)
 
         private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
