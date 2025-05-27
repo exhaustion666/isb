@@ -22,7 +22,7 @@ def main():
                 if args.key_bits is not None:
                     key_bits = args.key_bits
                 else: key_bits = config.get("blowfish_key_bits", 128)
-                generate_keys(config)
+                generate_keys(config, key_bits)
             case "encryption":
                 key = load_binary(config["symmetric_key"])
                 text = load_text_file(config["initial_file"])
