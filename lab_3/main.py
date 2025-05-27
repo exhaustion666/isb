@@ -10,6 +10,7 @@ def main():
         parser = argparse.ArgumentParser()
         parser.add_argument("mode", choices=["generation", "encryption", "decryption"], help="Operation mode: generation / encryption / decryption")
         parser.add_argument("-c", "--config", default="settings.json", help="Path to configuration JSON file")
+        parser.add_argument("--key-bits",ьtype=int, help="Blowfish symmetric key length in bits (must be multiple of 8 between 32 and 448)")
         
         args = parser.parse_args()
         config = load_config(args.config)
@@ -18,6 +19,9 @@ def main():
 
         match args.mode:
             case "generation":
+                if args.key_bits is not None:
+                    key_bits = args.key_bits
+                else: key_bits = config.get("blowfish_key_bits", 128)
                 generate_keys(config)
             case "encryption":
                 key = load_binary(config["symmetric_key"])
