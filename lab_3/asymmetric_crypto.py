@@ -4,18 +4,18 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding as asym_paddi
 from file_utils import *
 
 
-def generate_keys(config: dict) -> None:
+def generate_keys(config: dict, key_bits: int) -> None:
     """
     Generates a pair of RSA keys and a symmetric key for encryption.
     The symmetric key is encrypted with the public key and saved to disk.
     
     args:
         config (dict): Configuration dictionary containing paths for saving keys.
+        key_bits (int): The length of key.
     """
     try:
         print("Generating RSA key pair and symmetric key...")
 
-        key_length_bits = config.get("blowfish_key_bits", 128)
         if not (32 <= key_length_bits <= 448 and key_length_bits % 8 == 0):
             raise ValueError("Blowfish key length must be between 32-448 bits in 8-bit increments.")
 
