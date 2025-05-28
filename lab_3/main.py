@@ -11,6 +11,7 @@ def main():
         parser.add_argument("mode", choices=["generation", "encryption", "decryption"], help="Operation mode: generation / encryption / decryption")
         parser.add_argument("-c", "--config", default="settings.json", help="Path to configuration JSON file")
         parser.add_argument("--key-bits", type=int, help="Blowfish symmetric key length in bits (must be multiple of 8 between 32 and 448)")
+        parser.add_argument("--user-key", help="Path to the symmetric key file")
         
         args = parser.parse_args()
         config = load_config(args.config)
@@ -21,12 +22,16 @@ def main():
             case "generation":
                 generate_keys(config, args.key_bits)
             case "encryption":
-                key = load_binary(config["symmetric_key"])
+                if args.user_key:
+                    key = load_binary(args.user_key)
+                else: key = load_binary(config["symmetric_key"])
                 text = load_text_file(config["initial_file"])
                 encrypted_data = encrypt_data(key, text)
                 save_binary(config["encrypted_file"], encrypted_data)
             case "decryption":
-                key = load_binary(config["symmetric_key"])
+                if args.user_key:
+                    key = load_binary(args.user_key)
+                else: key = load_binary(config["symmetric_key"])
                 encrypted_data = load_binary(config["encrypted_file"])
                 decrypted_text = decrypt_data(key, encrypted_data)
                 save_text_file(config["decrypted_file"], decrypted_text)
